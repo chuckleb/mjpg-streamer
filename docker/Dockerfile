@@ -27,8 +27,11 @@ RUN wget --no-check-certificate \
 	cd mjpg-streamer-code-182/mjpg-streamer && \
 	make mjpg_streamer input_file.so output_http.so output_file.so && \
 	make install && \
-	cd / ; rm -rf mjpeg*
+	cd / ; rm -rf mjpg*
 
+VOLUME ["/data"]
+EXPOSE 8080
 
-# This will force it to pull latest script and execute
-#ENTRYPOINT ["/bin/bash", "-c", "wget https://raw.githubusercontent.com/STH-Dev/STHbench.sh/master/STHbench-Dev012.11.sh;chmod a+x *.sh ;./STHbench-Dev012.11.sh"]
+RUN	echo 'mjpg_streamer -i "input_file.so -f /data -n webcam.jpg" -o "output_http.so -w /usr/local/www"' > /start.sh && chmod a+rx /start.sh
+
+ENTRYPOINT /start.sh
