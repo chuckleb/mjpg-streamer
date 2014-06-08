@@ -32,6 +32,6 @@ RUN wget --no-check-certificate \
 VOLUME ["/data"]
 EXPOSE 8080
 
-RUN	echo 'mjpg_streamer -i "input_file.so -f /data -n webcam.jpg" -o "output_http.so -w /usr/local/www"' > /start.sh && chmod a+rx /start.sh
+RUN	echo 'mjpg_streamer -i "input_file.so -f /data -n webcam.jpg" -o "output_http.so -w /data/webroot"' > /start.sh && chmod a+rx /start.sh
 
 ENTRYPOINT /start.sh
